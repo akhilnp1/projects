@@ -1,35 +1,41 @@
-const inputbox=document.getElementById("inputbox")
-const listcontainer=document.getElementById("listcontainer")
-function addtask(){
-    if(inputbox.value=== ""){
-        alert("you must write something")
-    }
-    else{
-        let li=document.createElement("li");
-        li.innerHTML= inputbox.value;
+
+
+const inputbox = document.getElementById("inputbox");
+const listcontainer = document.getElementById("listcontainer");
+
+function addtask() {
+    if (inputbox.value === "") {
+        alert("You must write something");
+    } else {
+        let li = document.createElement("li");
+        li.innerHTML = inputbox.value;
         listcontainer.appendChild(li);
-        let span=document.createElement("span");
-        span.innerHTML= "\u00d7";
+        let span = document.createElement("span");
+        span.innerHTML = "\u00d7";
         li.appendChild(span);
-        }
-        inputbox.value = "";
-        savedata();
-}
-
-listcontainer.addEventListener("click",function(e){
-    if(e.target.tagname === "li"){
-        e.target.ClassList.toggle("checked");
     }
-    else if(e.target.tagname === "span"){
-        e.target.ParentElement.remove();
+    inputbox.value = "";
+    savedata();
+}
+
+listcontainer.addEventListener("click", function(e) {
+    if (e.target.tagName === "LI") {
+        e.target.classList.toggle("checked");
+    } else if (e.target.tagName === "SPAN") {
+        e.target.parentElement.remove();
+        savedata(); // Ensure data is saved after removing an item
     }
-},false);
+}, false);
 
+function savedata() {
+    localStorage.setItem("data", listcontainer.innerHTML);
+}
 
-function savedata(){
-    localStorage.setItem("data",listcontainer.innerHTML);
+function showtask() {
+    let savedData = localStorage.getItem("data");
+    if (savedData) {
+        listcontainer.innerHTML = savedData;
+    }
 }
-function showtask(){
-    listcontainer.innerHTML= localStorage.getItem("data")
-}
-showtask()
+
+showtask();
