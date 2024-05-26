@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href ="calc.css">
+
+<body>
+   
+
+    <div class="calc">
+        <input type="text" id="result" readonly>
+        <div class="div2">
+            <button onclick="clearresult()" class="c"><h1>C</h1></button>
+            <button onclick="deletechar()" class="c"><h1>B</h1></button>
+            <button onclick="appendvalue('/')"  class="c"><h1>/</h1></button>
+            <button onclick="appendvalue('*')" class="c"><h1>*</h1></button>
+        </div>
+        <div class="div3">
+            <button onclick="appendvalue('7')" class="c"><h1>7</h1></button>
+            <button onclick="appendvalue('8')" class="c"><h1>8</h1></button>
+            <button onclick="appendvalue('9')" class="c"><h1>9</h1></button>
+            <button onclick="appendvalue('-')" class="c"><h1>-</h1></button>
+        </div>
+        <div class="div4">
+            <button onclick="appendvalue('4')" class="c"><h1>4</h1></button>
+            <button onclick="appendvalue('5')" class="c"><h1>5</h1></button>
+            <button onclick="appendvalue('6')" class="c"><h1>6</h1></button>
+            <button onclick="appendvalue('+')" class="c"><h1>+</h1></button>
+        </div>
+        <div class="div5">
+            <div>
+                <div class="one">
+                    <button onclick="appendvalue('1')" class="c"><h1>1</h1></button>
+                    <button onclick="appendvalue('2')" class="c"><h1>2</h1></button>
+                    <button onclick="appendvalue('3')" class="c"><h1>3</h1></button>
+                
+                </div>
+                <div class="zero"> 
+                    <button onclick="appendvalue('0')" class="c1"><h1>0</h1></button>
+                    <button onclick="appendvalue('.')" class="c"><h1>.</h1></button>
+                    
+                </div>
+
+            </div>
+            
+            <div>  
+                <button onclick="calculate()" class="c2">=</button>
+            </div>
+            
+           
+        
+
+
+        </div>
+
+       
+
+
+
+    </div>
+    <script src="calc.js"></script>
+    
+</body>
+</html>
