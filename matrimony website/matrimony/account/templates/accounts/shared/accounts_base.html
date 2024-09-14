@@ -1,0 +1,65 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block styles %}
+
+
+
+        
+{% endblock styles %}
+
+{% block content %}
+<style>
+    
+
+</style>
+
+
+<div class="container my-5 ms-5" >
+
+    <div class="row g-0" >
+        <div class="col-sm-4 bg-light">
+            <h1 class="profile-header mb-5">Your Profile</h1>
+
+            <ul class="list-group">
+                <li class="list-group-item prosubnav">
+                    <a href="{% url 'account:profile' %}" style="text-decoration: none;font-size: larger;color: grey;"><i class="bi bi-person-circle me-2"></i>Profile</a>
+                </li>
+              
+                
+                <li class="list-group-item prosubnav">
+                    <a href="{% url 'user:friend_requests' %}" style="text-decoration: none;font-size: larger;color: grey;">Partner requests</a>
+                </li>
+                <li class="list-group-item prosubnav">
+                    <a href="{% url 'user:friends_list' %}" style="text-decoration: none;font-size: larger;color: grey;">Friend list</a>
+                </li>
+                <li class="list-group-item prosubnav">
+                    <a href="{% url 'user:inbox' %}" style="text-decoration: none;font-size: larger;color: grey;">Inbox</a>
+                </li>
+                <li class="list-group-item prosubnav">
+                    <a href="{% url 'user:personaldetails' %}" style="text-decoration: none;font-size: larger;color: grey;">Add your details</a>
+                </li>
+                <li class="list-group-item prosubnav">
+                    <a href="{% url 'account:password_change' %}" style="text-decoration: none;font-size: larger;color: grey;">Change Password</a>
+                </li> 
+               
+                {% comment %} <li class="list-group-item prosubnav">
+                    <a href="{% url 'user:send_message' %}" style="text-decoration: none;font-size: larger;color: grey;">Send Message</a>
+                </li> {% endcomment %}
+                <li class="list-group-item prosubnav">
+                    <a href="{% url 'account:logout' %}" style="text-decoration: none;font-size: larger;color: grey;">Logout</a>
+                </li>
+                <li class="list-group-item prosubnav">
+                    <a href="{% url 'account:delete_profile'  %}" style="text-decoration: none;font-size: larger;color: grey;">Delete Profile</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-8">
+
+            {% block accounts_content %}
+
+            {% endblock accounts_content %}
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

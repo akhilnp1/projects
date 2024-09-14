@@ -1,0 +1,20 @@
+{% extends 'shared/home.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 text-center p-5" style="background-color: rgb(207, 244, 228); border-radius: 20px;">
+            <h1 style="color: rgb(4, 108, 23);">Relationship</h1>
+            
+            <div class="my-4">
+                <div class="p-3 mb-3" style="background-color: rgba(116, 144, 134, 0.6); border-radius: 20px;">
+                    <h2><a class="text-white text-decoration-none" href="{% url 'account:relations' %}">Short-term relationship</a></h2>
+                </div>
+                <div class="p-3 mb-3" style="background-color: rgba(116, 144, 134, 0.6); border-radius: 20px;">
+                    <h2><a class="text-white text-decoration-none" href="{% url 'user:home' %}">Long-term relationship</a></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

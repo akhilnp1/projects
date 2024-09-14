@@ -1,0 +1,101 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+
+<style>
+    /* Scoped styles for the main content */
+    .container {
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .main {
+        background: rgb(232, 220, 220); /* Light pinkish color */
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-top: 20px;
+    }
+
+    .main h1, .main h2, .main h3 {
+        color: rgb(136, 51, 86); /* Dark pink color */
+        font-family: 'Arial', sans-serif;
+    }
+
+    .main h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    .main h2 {
+        font-size: 2em;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .main p {
+        line-height: 1.8;
+        color: #34495e;
+        font-size: 1.1em;
+    }
+
+    .main ul {
+        margin-top: 20px;
+        padding-left: 20px;
+    }
+
+    .main li {
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+
+    .main li strong {
+        color: rgb(136, 51, 86); /* Dark pink color */
+    }
+
+    footer {
+        background: grey; /* Grey background */
+        color: #ecf0f1;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+        border-top: 4px solid rgb(136, 51, 86); /* Dark pink color */
+    }
+
+    footer p {
+        margin: 0;
+        font-size: 1em;
+    }
+</style>
+
+<div class="container main">
+    <h1>About Us</h1>
+    <h2>Welcome to Matrimony</h2>
+    <p>At Matrimony, we believe in the power of love and the beauty of bringing two souls together. Our mission is to provide a trusted and secure platform for individuals seeking meaningful relationships and lifelong partnerships.</p>
+
+    <h2>Our Story</h2>
+    <p>Founded in 2001, Matrimony was created with the vision of making the search for a life partner a seamless and enjoyable experience. We understand the importance of finding the right match, and our dedicated team works tirelessly to ensure that every profile is genuine and every match is perfect.</p>
+
+    <h2>Why Choose Us?</h2>
+    <ul>
+        <li><strong>Verified Profiles:</strong> We prioritize your safety and security by ensuring that all profiles are thoroughly verified.</li>
+        <li><strong>Advanced Matching Algorithm:</strong> Our state-of-the-art algorithm helps you find the most compatible matches based on your preferences and interests.</li>
+        <li><strong>User-Friendly Interface:</strong> Our website is designed to be intuitive and easy to navigate, making your search for a partner hassle-free.</li>
+        <li><strong>24/7 Customer Support:</strong> Our dedicated support team is always here to assist you with any queries or concerns.</li>
+    </ul>
+
+    <h2>Our Values</h2>
+    <p><strong>Integrity:</strong> We are committed to maintaining the highest standards of honesty and transparency.</p>
+    <p><strong>Respect:</strong> We value and respect the diversity of our users and their unique journeys.</p>
+    <p><strong>Commitment:</strong> We are dedicated to helping you find your perfect match and supporting you every step of the way.</p>
+
+    <h2>Join Us</h2>
+    <p>Become a part of our growing community and start your journey towards finding true love today. Sign up now and take the first step towards a beautiful future with Matrimony.</p>
+</div>
+
+<footer>
+    <p>© 2001 Matrimony. All rights reserved.</p>
+</footer>
+
+{% endblock %}

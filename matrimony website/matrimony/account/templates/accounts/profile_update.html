@@ -1,0 +1,24 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+
+{% block styles %}
+
+        
+{% endblock styles %}
+
+{% block accounts_content %}
+
+    <h1 class="text-center" style="text-align: center;color: rgb(217, 123, 123);">Edit Profile</h1>
+    <div class="container border ms-5" style="background-color:white;padding:50px;border-radius: 50px;">
+        
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <div class="d-grid mt-2">
+            <button type="submit" class="btn btn-primary" style="color: rgb(246, 245, 245);background-color: rgb(230, 156, 156);border-color:rgb(230, 156, 156);">Save</button>
+        </div>
+    </form>
+
+    </div>
+
+{% endblock accounts_content %}

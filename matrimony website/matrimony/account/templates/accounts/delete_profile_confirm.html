@@ -1,0 +1,25 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h1 class="text-center" style="color:brown;">Delete Profile</h1>
+                    <p class="text-center">Are you sure you want to delete your profile?</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid mb-4">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                        <div class="text-center">
+                            <a href="{% url 'account:profile' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,650 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(95, 19, 99); /* Set the background color of the page */
+    }
+
+    .btn {
+        background-color: rgb(190, 99, 188);
+        border-radius: 50%;
+        width: 60px; /* Adjust as needed */
+        height: 60px; /* Adjust as needed */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0; /* Remove padding to fit icon properly */
+    }
+
+    .btn i {
+        font-size: 24px; /* Adjust icon size */
+        color: white;
+    }
+
+    .btn p {
+        margin: 0;
+        color: white;
+        font-size: 12px; /* Adjust text size if needed */
+    }
+
+    .icon-container {
+        border-radius: 50px;
+
+        border: 2px solid rgb(255, 255, 255);
+        background-color: white;
+        display: flex;
+        justify-content: space-around; /* Spread icons evenly */
+        align-items: center;
+        padding: 2px;
+        box-shadow: 2px 5px 5px grey;
+        width: 80%; /* Set width to 80% of the screen */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .section {
+        background-color: rgb(95, 19, 99);
+        width: 100%;
+    }
+    .insection{
+        background-color: #787474;
+    }
+
+    .profile-img {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 50px; /* Space between image and text */
+    }
+</style>
+
+<!-- Sections -->
+<div id="incoming" class="section mt-3" style="display: block;">
+    <h1 class="my-5" style="color: white;text-align: center;">Requests Received</h1>
+
+    <div class="p-4 p-md-5 insection " style="background-color:white; border-radius: 30px;box-shadow: 2px 5px 5px grey;">
+        <h3 class="text-center mb-5" style="color: rgb(95, 19, 99);font-size: xx-large;">
+            <i class="bi bi-dash-lg icon-center mb-5 fs-1 text-center"></i>
+        </h3>
+        <ul class="list-unstyled mt-4">
+            {% for request in incoming_requests %}
+            <li class="d-flex align-items-center my-2" style="color: rgb(136, 51, 86);border-radius: 10px;">
+                <a href="{% url 'user:partner_profile' request.from_user.id %}">
+                    <img src="{{ request.from_user.profile_photo.url }}" alt="{{ request.from_user.username }}" class="profile-img"/>
+                </a>
+                <h3>{{ request.from_user.username }}</h3>
+            </li>
+            {% empty %}
+            <li>No incoming requests.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Outgoing Requests -->
+<div id="outgoing" class="section mt-3" style="display: none;">
+    <h1 class="my-5" style="color: white;text-align: center;">Requests Sent</h1>
+
+    <div class="p-4 p-md-5 insection" style="background-color: white; border-radius: 30px;box-shadow: 2px 5px 5px grey;">
+        <h3 class="text-center mb-5" style="color: rgb(95, 19, 99);font-size: xx-large;">
+            <i class="bi bi-dash-lg icon-center mb-5 fs-1 text-center"></i>
+        </h3>
+        <ul class="list-unstyled mt-4">
+            {% for request in outgoing_requests %}
+            <li class="d-flex align-items-center my-2" style="color: rgb(136, 51, 86);border-radius: 10px;">
+                <a href="{% url 'user:partner_profile' request.to_user.id %}">
+                    <img src="{{ request.to_user.profile_photo.url }}" alt="{{ request.to_user.username }}" class="profile-img"/>
+                </a>
+                <h3>{{ request.to_user.username }}</h3>
+            </li>
+            {% empty %}
+            <li>No outgoing requests.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Shortlisted Profiles -->
+<div id="shortlisted" class="section mt-3" style="display: none;">
+    <h1 class="my-5" style="color: white;text-align: center;">Shortlisted Profiles</h1>
+
+    <div class="p-4 p-md-5 insection" style="background-color: white; border-radius: 30px;box-shadow: 2px 5px 5px grey;">
+        <h3 class="text-center mb-5" style="color: rgb(95, 19, 99);font-size: xx-large;">
+            <i class="bi bi-dash-lg icon-center mb-5 fs-1 text-center"></i>
+        </h3>
+        <ul class="list-unstyled mt-4">
+            {% for profile in shortlisted_profiles %}
+            <li class="d-flex align-items-center my-2" style="color: rgb(136, 51, 86);border-radius: 10px;">
+                <a href="{% url 'user:partner_profile' profile.id %}">
+                    <img src="{{ profile.profile_photo.url }}" alt="{{ profile.username }}" class="profile-img"/>
+                </a>
+                <h3>{{ profile.username }}</h3>
+            </li>
+            {% empty %}
+            <li>No shortlisted profiles.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Contacted Users -->
+<div id="contacted" class="section mt-3" style="display: none;">
+    <h1 class="my-5" style="color: white;text-align: center;">Contacted Users</h1>
+
+    <div class="p-4 p-md-5 insection" style="background-color: white; border-radius: 30px;box-shadow: 2px 5px 5px grey;">
+        <h3 class="text-center mb-5" style="color: rgb(95, 19, 99);font-size: xx-large;">
+            <i class="bi bi-dash-lg icon-center mb-5 fs-1 text-center"></i>
+        </h3>
+
+        <ul class="list-unstyled mt-4">
+            {% for user in contacted_users %}
+            <li class="d-flex align-items-center my-2" style="color: rgb(136, 51, 86);border-radius: 10px;">
+                <a href="{% url 'user:partner_profile' user.id %}">
+                    <img src="{{ user.profile_photo.url }}" alt="{{ user.username }}" class="profile-img"/>
+                </a>
+                <h3>{{ user.username }}</h3>
+            </li>
+            {% empty %}
+            <li>No contacted users.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Messages -->
+<div id="messages" class="section mt-3" style="display: none;">
+    <h1 class="my-5" style="color: white;text-align: center;">Messages</h1>
+
+    <div class="p-4 p-md-5 insection" style="background-color: white; border-radius:30px;box-shadow: 2px 5px 5px grey;">
+        <h3 class="text-center mb-5" style="color: rgb(95, 19, 99);font-size: xx-large;">
+            <i class="bi bi-dash-lg icon-center mb-5 fs-1 text-center"></i>
+        </h3>
+
+        <ul class="list-unstyled mt-4">
+            {% for message in messages %}
+            <li class="d-flex align-items-center my-2" style="color: rgb(136, 51, 86);border-radius: 10px;">
+                <a href="{% url 'user:partner_profile' message.sender.id %}">
+                    <img src="{{ message.sender.profile_photo.url }}" alt="{{ message.sender.username }}" class="profile-img"/>
+                </a>
+                <h5>From: {{ message.sender.username }} - To: {{ message.recipient.username }} - {{ message.content }}</h5>
+            </li>
+            {% empty %}
+            <li>No messages.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Accepted Friends -->
+<div id="friends" class="section mt-3" style="display: none;">
+    <h1 class="my-5" style="color: white;text-align: center;">Accepted Friends</h3>
+
+    <div class="p-4 p-md-5 insection" style="background-color: white; border-radius: 30px;box-shadow: 2px 5px 5px grey;">
+        <h3 class="text-center mb-5" style="color: rgb(95, 19, 99);font-size: xx-large;">
+            <i class="bi bi-dash-lg icon-center mb-5 fs-1 text-center"></i>
+        </h3>
+
+        <ul class="list-unstyled mt-4">
+            {% for friend in friends %}
+            <li class="d-flex align-items-center my-2" style="color: rgb(136, 51, 86);border-radius: 10px;">
+                <a href="{% url 'user:partner_profile' friend.id %}">
+                    <img src="{{ friend.profile_photo.url }}" alt="{{ friend.username }}" class="profile-img"/>
+                </a>
+                <h3>{{ friend.username }}</h3>
+            </li>
+            {% empty %}
+            <li>No friends yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Partners who have shortlisted me -->
+<div id="shortlisted_by_partners" class="section mt-3" style="display: none;">
+    <h1 class="my-5" style="color: white;text-align: center;">Partners Who Shortlisted Me</h1>
+
+    <div class="p-4 p-md-5 insection" style="background-color: white; border-radius: 30px;box-shadow: 2px 5px 5px grey;">
+
+        <h3 class="text-center mb-5" style="color: rgb(95, 19, 99);font-size: xx-large;">
+            <i class="bi bi-dash-lg icon-center mb-5 fs-1 text-center"></i>
+        </h3>
+
+        <ul class="list-unstyled mt-4">
+            {% for partner in partners_shortlisting_users %}
+            <li class="d-flex align-items-center my-2" style="color: rgb(136, 51, 86);border-radius: 10px;">
+                <a href="{% url 'user:partner_profile' partner.id %}">
+                    <img src="{{ partner.profile_photo.url }}" alt="{{ partner.username }}" class="profile-img"/>
+                </a>
+                <h3>{{ partner.username }}</h3>
+            </li>
+            {% empty %}
+            <li>No partners have shortlisted you yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Hidden Partners -->
+<div id="hidden" class="section mt-3" style="display: none;">
+    <h1 class="my-5" style="color: white;text-align: center;">Hidden Partners</h1>
+
+    <div class="p-4 p-md-5 insection" style="background-color: white; border-radius: 30px;box-shadow: 2px 5px 5px grey;">
+        <h3 class="text-center mb-5" style="color: rgb(95, 19, 99);font-size: xx-large;">
+            <i class="bi bi-dash-lg icon-center mb-5 fs-1 text-center"></i>
+        </h3>
+        <ul class="list-unstyled mt-4">
+            {% for profile in hidden_profiles %}
+            <li class="d-flex justify-content-between align-items-center my-2" style="color: rgb(136, 51, 86);border-radius: 10px;">
+                <a href="{% url 'user:partner_profile' profile.id %}">
+                    <img src="{{ profile.profile_photo.url }}" alt="{{ profile.username }}" class="profile-img"/>
+                </a>
+                <span>{{ profile.username }}</span>
+                <form action="{% url 'user:unhide_profile' profile.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary btn-sm">Unhide</button>
+                </form>
+            </li>
+            {% empty %}
+            <li>No hidden partners.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Button Navigation at the bottom -->
+<div class="fixed-bottom mb-4 d-flex justify-content-center">
+    <div class="icon-container d-flex p-2">
+        <button type="button" class="btn me-2" onclick="showSection('incoming')">
+            <i class="bi bi-inbox fs-1"></i>
+        </button>
+        <button type="button" class="btn me-2" onclick="showSection('outgoing')">
+            <i class="bi bi-send fs-1"></i>
+        </button>
+        <button type="button" class="btn me-2" onclick="showSection('friends')">
+            <i class="bi bi-person-check fs-1"></i>
+        </button>
+        <button type="button" class="btn me-2" onclick="showSection('shortlisted')">
+            <i class="bi bi-heart-fill fs-1"></i>
+        </button>
+        <button type="button" class="btn me-2" onclick="showSection('shortlisted_by_partners')">
+            <i class="bi bi-star fs-1"></i>
+        </button>
+        <button type="button" class="btn me-2" onclick="showSection('contacted')">
+            <i class="bi bi-person fs-1"></i>
+        </button>
+        <button type="button" class="btn me-2" onclick="showSection('messages')">
+            <i class="bi bi-chat-fill fs-1"></i>
+        </button>
+        <button type="button" class="btn me-2" onclick="showSection('hidden')">
+            <i class="bi bi-eye-slash fs-1"></i>
+        </button>
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // Show the selected section
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+            selectedSection.style.display = 'block';
+        }
+    }
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Button Navigation -->
+    <div class="d-flex flex-wrap justify-content-start mb-4">
+        <button type="button" class="btn btn-secondary me-2 mb-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('incoming')">
+            Requests Received
+        </button>
+        <button type="button" class="btn btn-secondary me-2 mb-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('outgoing')">
+            Requests Sent
+        </button>
+        <button type="button" class="btn btn-secondary me-2 mb-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('shortlisted')">
+            Shortlisted Profiles
+        </button>
+        <button type="button" class="btn btn-secondary me-2 mb-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('shortlisted_by_partners')">
+            Shortlisted Me
+        </button>
+        <button type="button" class="btn btn-secondary me-2 mb-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('contacted')">
+            Contacted Users
+        </button>
+        <button type="button" class="btn btn-secondary me-2 mb-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('messages')">
+            Messages
+        </button>
+        <button type="button" class="btn btn-secondary me-2 mb-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('hidden')">
+            Hidden Partners
+        </button>
+        <button type="button" class="btn btn-secondary me-2 mb-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('friends')">
+            Accepted Friends
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container w-50 w-md-75 w-lg-50" style="background-color: rgb(232, 220, 220); color: grey; border-radius: 20px; padding: 30px; box-shadow: rgb(152, 151, 151) 5px 10px 10px;">
+        <h2 class="text-center" style="color: rgb(136, 51, 86);">Activity Info</h2>
+
+        <!-- Incoming Requests -->
+        <div id="incoming" class="section" style="display: none;">
+            <div class="p-4 p-md-5" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Requests Received</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for request in incoming_requests %}
+                    <li class="d-flex justify-content-between align-items-center my-2" style="color: rgb(136, 51, 86);">
+                        <h5>{{ request.from_user.username }}</h5>
+                        {% comment %} <div>
+                            <a href="{% url 'user:accept_friend_request' request.id %}" class="btn btn-success btn-sm me-2">Accept</a>
+                            <a href="{% url 'user:reject_friend_request' request.id %}" class="btn btn-danger btn-sm">Reject</a>
+                        </div> {% endcomment %}
+                    {% comment %} </li>
+                    {% empty %}
+                    <li>No incoming requests.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Outgoing Requests -->
+        <div id="outgoing" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Requests Sent</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for request in outgoing_requests %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        {{ request.to_user.username }}
+                    </li>
+                    {% empty %}
+                    <li>No outgoing requests.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Shortlisted Profiles -->
+        <div id="shortlisted" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Shortlisted Profiles</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for profile in shortlisted_profiles %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        {{ profile.username }}
+                    </li>
+                    {% empty %}
+                    <li>No shortlisted profiles.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contacted Users -->
+        <div id="contacted" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Contacted Users</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for user in contacted_users %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        {{ user.username }}
+                    </li>
+                    {% empty %}
+                    <li>No contacted users.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div id="messages" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Messages</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for message in messages %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        From: {{ message.sender.username }} - To: {{ message.recipient.username }} - {{ message.content }}
+                    </li>
+                    {% empty %}
+                    <li>No messages.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Accepted Friends -->
+        <div id="friends" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Accepted Friends</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for friend in friends %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        {{ friend.username }}
+                    </li>
+                    {% empty %}
+                    <li>No friends yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Partners who have shortlisted me -->
+        <div id="shortlisted_by_partners" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Partners Who Shortlisted Me</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for partner in partners_shortlisting_users %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        {{ partner.username }}
+                    </li>
+                    {% empty %}
+                    <li>No partners have shortlisted you yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Hidden Partners -->
+        <div id="hidden" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Hidden Partners</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for profile in hidden_profiles %}
+                    <li class="d-flex justify-content-between align-items-center my-2" style="color: rgb(136, 51, 86);">
+                        {{ profile.username }}
+                        <form action="{% url 'user:unhide_profile' profile.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary btn-sm">Unhide</button>
+                        </form>
+                    </li>
+                    {% empty %}
+                    <li>No hidden partners.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // Show the selected section
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+            selectedSection.style.display = 'block';
+        }
+    }
+</script>
+{% endblock %} {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-start mb-4">
+        <button type="button" class="btn btn-secondary" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('incoming')">
+            Requests Received
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('outgoing')">
+            Requests Sent
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('shortlisted')">
+            Shortlisted Profiles
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('contacted')">
+            Contacted Users
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);" onclick="showSection('messages')">
+            Messages
+        </button>
+    </div>
+
+    <div class="container w-75 w-md-75 w-lg-50" style="background-color: rgb(232, 220, 220); color: grey; border-radius: 20px; padding: 30px; box-shadow: rgb(152, 151, 151) 5px 10px 10px;">
+        <h2 class="text-center" style="color: rgb(136, 51, 86);">Profile Details</h2>
+
+        <!-- Incoming Requests -->
+        <div id="incoming" class="section" style="display: none;">
+            <div class="p-5" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Requests Received</h3>
+                <ul class="list-unstyled mt-5">
+                    {% for request in incoming_requests %}
+                    <li class="d-flex justify-content-between align-items-center my-2" style="color: rgb(136, 51, 86);">
+                        <h5>{{ request.from_user.username }}</h5>
+                        <div>
+                            <a href="{% url 'user:accept_friend_request' request.id %}" class="btn btn-success btn-sm me-2">Accept</a>
+                            <a href="{% url 'user:reject_friend_request' request.id %}" class="btn btn-danger btn-sm">Reject</a>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li>No incoming requests.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Outgoing Requests -->
+        <div id="outgoing" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Requests Sent</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for request in outgoing_requests %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        {{ request.to_user.username }}
+                    </li>
+                    {% empty %}
+                    <li>No outgoing requests.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Shortlisted Profiles -->
+        <div id="shortlisted" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Shortlisted Profiles</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for profile in shortlisted_profiles %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        {{ profile.username }}
+                    </li>
+                    {% empty %}
+                    <li>No shortlisted profiles.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contacted Users -->
+        <div id="contacted" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Contacted Users</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for user in contacted_users %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        {{ user.username }}
+                    </li>
+                    {% empty %}
+                    <li>No contacted users.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div id="messages" class="section" style="display: none;">
+            <div class="p-4" style="background-color: white; border-radius: 15px;">
+                <h3 style="color: rgb(136, 51, 86);">Messages</h3>
+                <ul class="list-unstyled mt-4">
+                    {% for message in messages %}
+                    <li class="my-2" style="color: rgb(136, 51, 86);">
+                        From: {{ message.sender.username }} - To: {{ message.recipient.username }} - {{ message.content }}
+                    </li>
+                    {% empty %}
+                    <li>No messages.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // Show the selected section
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+            selectedSection.style.display = 'block';
+        }
+    }
+</script>
+{% endblock %} {% endcomment %}

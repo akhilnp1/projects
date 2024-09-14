@@ -1,0 +1,223 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<style>
+    /* Custom styles for responsive design */
+    .container {
+        max-width: 90%;
+        padding: 15px;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .btn {
+        border-radius: 10px;
+        font-weight: bold;
+    }
+    
+    @media (max-width: 767.98px) {
+        .container {
+            padding: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12" style="background-color: rgb(255, 255, 255); border-radius: 30px; padding: 30px; border: 1px solid black;">
+            <h1 class="text-center mb-5" style="color:black;">Additional Details</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.fathers_name %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.fathers_job %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.mothers_name %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.mothers_job %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.siblings %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.income %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.permanent_address %}
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="same_as_permanent"> Same as permanent address
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.present_address %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.country %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.state %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.district %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.height %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.weight %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.caste %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.religion %}
+                        </div>
+                        <div class="form-group">
+                            {% include 'components/form_field.html' with field=form.horriscope %}
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-secondary my-3" style="color: rgb(246, 245, 245); background-color: rgb(1, 1, 1); border-color: rgb(10, 10, 10);">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const permanentAddress = document.getElementById("id_permanent_address");
+        const presentAddress = document.getElementById("id_present_address");
+        const sameAspermanentCheckbox = document.getElementById("same_as_permanent");
+
+        sameAspermanentCheckbox.addEventListener("change", function() {
+            if (this.checked) {
+                presentAddress.value = permanentAddress.value;
+                presentAddress.readOnly = true;
+            } else {
+                presentAddress.readOnly = false;
+                presentAddress.value = "";
+            }
+        });
+    });
+</script>
+
+{% endblock content %}
+
+
+
+{% comment %} {% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+
+<div class="row mt-5">
+        <div class="container pt-5 w-50" style="color: grey;background-color: rgb(232, 220, 220);font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        margin-top: 50px;border-radius: 30px;padding: 50px;margin-bottom: 100px;box-shadow:rgb(152, 151, 151) 5px 10px 10px;">
+    
+      <h1 class="text-center mb-5" style="text-align: center;color: rgb(136, 51, 86);">Parents and Personal Details</h1>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.fathers_name %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.fathers_job %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.mothers_name %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.mothers_job %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.siblings %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.income %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.permanent_address %}
+            </div>
+            <div class="form-group mb-3">
+              <label>
+                <input type="checkbox" id="same_as_permanent"> Same as permanent address
+              </label>
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.present_address %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.country %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.state %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.district %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.height %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.weight %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.caste %}
+            </div>
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.religion %}
+            </div>
+      
+            <div class="form-group mb-3">
+              {% include 'components/form_field.html' with field=form.horriscope %}
+            </div>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-secondary my-3"
+          style="color: rgb(246, 245, 245);background-color: rgb(136, 51, 86);border-color:rgb(230, 156, 156);">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const permanentAddress = document.getElementById("id_permanent_address");
+        const presentAddress = document.getElementById("id_present_address");
+        const sameAspermanentCheckbox = document.getElementById("same_as_permanent");
+    
+        sameAspermanentCheckbox.addEventListener("change", function() {
+          if (this.checked) {
+            presentAddress.value = permanentAddress.value;
+            presentAddress.readOnly = true;
+          } else {
+            presentAddress.readOnly = false;
+            presentAddress.value = "";
+          }
+        });
+      });
+    </script>
+
+
+
+{% endblock content %} {% endcomment %}

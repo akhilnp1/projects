@@ -1,0 +1,73 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+
+<button type="submit" class="btn btn-secondary my-3 ms-3"
+    style="color: rgb(246, 245, 245); background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);">
+    <a href="{% url 'user:friend_requests' %}" style="text-decoration: none; color: white;">Friend requests</a>
+</button>
+
+<div class="container text-center">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8 col-md-10 col-12" style="background-color: rgb(232, 220, 220); color: grey; border-radius: 20px; padding: 20px;">
+            <h2 class="my-5">YOUR FRIENDS LIST</h2>
+            <ul class="list-unstyled" style="background-color: white; border-radius: 15px; padding: 20px; margin:20px;">
+                {% for friend in friends %}
+                <li class="d-flex align-items-center mb-3 flex-column flex-sm-row" style="color: rgb(136, 51, 86);">
+                    
+                    
+                    <img src="{{ friend.profile_photo.url }}" alt="{{ friend.username }}" width="50" height="50"
+                        style="border-radius: 25px;" class="mx-4 mb-2 mb-sm-0">
+                    <h3 class="mb-0 flex-grow-1">{{ friend.username }}</h3>
+                    <form action="{% url 'user:add_to_favorites' friend.id %}?next={% url 'user:friends_list' %}" method="post" class="ms-3">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success me-2" style="background-color: rgb(136, 51, 86);"><i class="bi bi-heart me-2"></i>Add to Fav
+                        </button>
+                    </form>
+                    
+                    <form action="{% url 'user:remove_friend' friend.id %}" method="post" class="ms-auto">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+{% comment %} {% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+
+<button type="submit" class="btn btn-secondary my-3 ms-3"
+    style="color: rgb(246, 245, 245); background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);">
+    <a href="{% url 'user:friend_requests' %}" style="text-decoration: none; color: white;">Friend requests</a>
+</button>
+
+<div class="container text-center">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8 col-md-10 col-12" style="background-color: rgb(232, 220, 220); color: grey; border-radius: 20px; padding: 20px;">
+            <h2 class="my-5">YOUR FRIENDS LIST</h2>
+            <ul class="list-unstyled" style="background-color: white; border-radius: 15px; padding: 20px; margin:20px;">
+                {% for friend in friends %}
+                <li class="d-flex align-items-center mb-3 flex-column flex-sm-row" style="color: rgb(136, 51, 86);">
+                    <img src="{{ friend.profile_photo.url }}" alt="{{ friend.username }}" width="50" height="50"
+                        style="border-radius: 25px;" class="mx-4 mb-2 mb-sm-0">
+                    <h3 class="mb-0">{{ friend.username }}</h3>
+                    <form action="{% url 'user:remove_friend' friend.id %}" method="post" class="mt-2 mt-sm-0 ms-sm-3">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% endcomment %}

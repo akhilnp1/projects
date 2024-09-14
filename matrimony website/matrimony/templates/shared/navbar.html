@@ -1,0 +1,58 @@
+{% comment %} {% load static %} {% endcomment %}
+<style>
+.prosubnav:hover {
+    background-color: rgb(232, 220, 220);
+     
+}
+</style>
+
+
+
+        
+
+<nav class="navbar navbar-expand-sm navbar-dark " style="background-color: rgb(47, 144, 87);">
+    <div class="container">
+
+        <a class="navbar-brand" href="#" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;color: rgb(237, 235, 235);">LEARNBUDS        
+        </a>
+
+    
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            {% if not user.is_authenticated %}
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'account:register' %}">Register</a>
+                </li>
+            {% endif %}
+   
+            </ul>
+                  
+         {% if user.is_authenticated %}
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0 me-2" >
+                <button class="btn border border-1">                      <li><a class="dropdown-item " style="color: white;" href="{% url 'account:logout' %}">Logout</a></li>
+                </button>
+            </ul>
+            {% endif %}
+            
+            <form class="d-flex my-2 my-lg-0">
+                <input class="form-control me-sm-2" type="text" placeholder="Search" />
+                <button class="btn  my-2 my-sm-0" style="color: rgb(246, 245, 245);background-color: rgb(4, 108, 23);border-color:rgb(4, 108, 23);" type="submit">
+                    Search
+                </button>
+            </form>
+           
+        </div>
+    </div>
+</nav>

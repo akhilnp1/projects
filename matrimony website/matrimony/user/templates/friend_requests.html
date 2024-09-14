@@ -1,0 +1,49 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-start">
+        <button type="button" class="btn btn-secondary mb-4" style="background-color: rgb(136, 51, 86); border-color: rgb(230, 156, 156);">
+            <a href="{% url 'user:friends_list' %}" style="text-decoration: none; color: white;">Friend List</a>
+        </button>
+    </div>
+
+    <div class="container w-75 w-md-75 w-lg-50" style="background-color: rgb(232, 220, 220); color: grey; border-radius: 20px; padding: 30px; box-shadow: rgb(152, 151, 151) 5px 10px 10px;">
+        <h2 class="text-center" style="color: rgb(136, 51, 86);">Friend Requests</h2>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="p-5" style="background-color: white; border-radius: 15px;">
+                    <h3 style="color: rgb(136, 51, 86);">Requests Received</h3>
+                    <ul class="list-unstyled mt-5">
+                        {% for request in incoming_requests %}
+                        <li class="d-flex justify-content-between align-items-center my-2" style="color: rgb(136, 51, 86);">
+                            <h5>{{ request.from_user.username }}</h5>
+                            <div>
+                                <a href="{% url 'user:accept_friend_request' request.id %}" class="btn btn-success btn-sm me-2">Accept</a>
+                                <a href="{% url 'user:reject_friend_request' request.id %}" class="btn btn-danger btn-sm">Reject</a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="p-4" style="background-color: white; border-radius: 15px;">
+                    <h3 style="color: rgb(136, 51, 86);">Requests Sent</h3>
+                    <ul class="list-unstyled mt-4">
+                        {% for request in outgoing_requests %}
+                        <li class="my-2" style="color: rgb(136, 51, 86);">
+                            {{ request.to_user.username }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

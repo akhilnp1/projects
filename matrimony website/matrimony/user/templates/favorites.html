@@ -1,0 +1,26 @@
+{% extends 'usernav/shared/navbar.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: rgb(136, 51, 86);">Your Favorite Profiles</h1>
+    <div class="list-group mx-auto w-50 w-md-75 w-lg-50">
+        {% for favorite in favorites %}
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <a href="{% url 'user:partner_profile' favorite.favorite.id %}" style="text-decoration: none; color: grey; font-size:x-large;">
+                        <img src="{{ favorite.favorite.profile_photo.url }}" alt="Profile Photo" width="60" height="60" class="rounded-circle me-2">
+                        {{ favorite.favorite.get_full_name }}
+                    </a>
+                </div>
+                <form action="{% url 'user:remove_from_favorites' favorite.favorite.id %}" method="post" class="mb-0">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Remove
+                    </button>
+                </form>
+            </div>
+        {% empty %}
+            <p class="text-center">You have no favorite profiles yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

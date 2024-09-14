@@ -1,0 +1,24 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<button type="submit" class="btn btn-primary mt-4 ms-4" style="color: rgb(246, 245, 245);background-color: rgb(136, 51, 86);border-color:rgb(230, 156, 156);">
+    <a style="color:white;text-decoration: none;" href="{% url 'user:personaldetails' %}">Add your details </a>
+
+</button>
+
+<div class="container pt-5 w-50 " style="color:  rgb(136, 51, 86);background-color: rgb(232, 220, 220);font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-top: 50px;border-radius: 30px;padding: 50px;margin-bottom: 100px;box-shadow:rgb(152, 151, 151) 5px 10px 10px;">
+
+<h1 class="mb-5">PARTNER PREFERANCE</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+  
+    <button type="submit" class="btn btn-primary mt-4" style="color: rgb(246, 245, 245);background-color: rgb(136, 51, 86);border-color:rgb(230, 156, 156);">Submit</button>
+
+</form>
+
+</div>
+{% endblock content %}

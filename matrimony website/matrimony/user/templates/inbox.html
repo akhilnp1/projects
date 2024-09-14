@@ -1,0 +1,27 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<!-- Bootstrap CSS Link -->
+
+<div class="container my-4 text-center">
+    <h1 class="text-center mb-4" style="color: rgb(90, 26, 53);">Your Inbox</h1>
+
+    <div class="row justify-content-center mt-5">
+        <!-- Iterate through partners and create a responsive card layout -->
+        {% for partner in partners %}
+            <div class="col-md-12 col-lg-12 w-50 mb-3 text-center">
+                <div class="card border-light " style="background-color: rgb(230, 156, 156);border-radius: 50px;">
+                    <a href="{% url 'user:chatbox' partner.id %}" class="text-decoration-none text-white">
+                        <div class="card-body d-flex align-items-center">
+                            <img src="{{ partner.profile_photo.url }}" alt="Profile Photo" class="rounded-circle me-5 ms-2" width="50" height="50">
+                            <h5 class="card-title mb-0">{{ partner.get_full_name }}</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Bootstrap JS and Popper.js for responsive features -->
+{% endblock %}

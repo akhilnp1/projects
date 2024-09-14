@@ -1,0 +1,25 @@
+{% extends 'shared/home.html' %}
+
+{% block content %}
+<div class="container text-center" style="margin-top: 50px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm" style="background-color: rgb(207, 244, 228); border-radius: 20px;margin-top:100px;">
+                <div class="card-body p-4">
+                    <h1 class="card-title" style="color: rgb(4, 108, 23);">Go to matrimony website?</h1>
+                    <div class="mt-4">
+                        {% if is_personal_details_filled %}
+                            <a class="btn btn-success btn-lg w-100 mb-3" href="{% url 'user:matrimonyhome' %}" style="background-color: rgb(116, 144, 134);">YES</a>
+                        {% else %}
+                            <a class="btn btn-success btn-lg w-100 mb-3" href="{% url 'user:personaldetails' %}" style="background-color: rgb(116, 144, 134);">YES</a>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <button class="btn btn-danger btn-lg w-100" style="background-color: rgb(116, 144, 134);">NO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<style>
+    .error-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary-custom {
+        color: #fff;
+        background-color: rgb(230, 156, 156);
+        border-color: rgb(230, 156, 156);
+        border-radius: 20px;
+        padding: 10px 20px;
+        text-decoration: none;
+    }
+</style>
+
+<div class="error-container">
+    <div class="error-message">
+        <h1>Payment Failed</h1>
+        <p>Your payment failed. Please try again.</p>
+        <a href="{% url 'user:subscription' %}" class="btn btn-primary-custom">Try Again</a>
+        <a href="{% url 'user:matrimonyhome' %}" class="btn btn-secondary">Return to Home</a>
+    </div>
+</div>
+{% endblock %}

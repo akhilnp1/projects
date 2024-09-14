@@ -1,0 +1,176 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(249, 248, 247);
+        font-family: 'Arial', sans-serif;
+    }
+    .container {
+        max-width: 80%;
+    }
+    .profile-header {
+        color: rgb(136, 51, 86);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .btn-custom {
+        color: rgb(246, 245, 245);
+        background-color: rgb(136, 51, 86);
+        border-color: rgb(230, 156, 156);
+        border-radius: 25px;
+        margin-bottom: 20px;
+        text-align: center;
+        display: inline-block;
+    }
+    .profile-img-container {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .profile-img {
+        border-radius: 50%;
+        border: 5px solid rgb(136, 51, 86);
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+    }
+    .profile-details {
+        width: 70%;
+        margin: 0 auto;
+        background-color: white;
+        border: 2px solid rgb(245, 243, 243);
+        border-radius: 30px;
+        box-shadow: rgb(184, 182, 182) 5px 7px 7px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    .profile-details h3 {
+        margin-bottom: 20px;
+        color: rgb(136, 51, 86);
+    }
+    .profile-details p {
+        font-size: 1rem;
+        color: rgb(119, 119, 119);
+        margin-bottom: 10px;
+    }
+    .back-btn {
+        color: white;
+        text-decoration: none;
+    }
+    .back-btn:hover {
+        color: black;
+        text-decoration: none;
+    }
+    .details-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    .details-col {
+        flex: 1;
+        min-width: 200px;
+    }
+    #contactDetails {
+        display: none; /* Initially hide the contact details */
+    }
+</style>
+
+<div class="container">
+    <h1 class="profile-header mt-5">{{ partner.username }}'s Profile</h1>
+    
+    <div class="text-center">
+        <button type="button" id="messageButton" class="btn btn-custom">
+            Message
+        </button>
+        <p id="subscriptionMessage" class="text-danger text-center" style="display: none;">
+            You must subscribe to a plan to send messages.
+        </p>
+    </div>
+    
+    <div class="profile-img-container">
+        <img src="{{ partner.profile_photo.url }}" alt="{{ partner.username }}" class="profile-img mx-4 mt-5 mb-3">
+        <h2 class="mt-3">{{ partner.username }}</h2>
+    </div>
+    
+    <div class="profile-details">
+        <h3>Personal Details</h3>
+        <div class="details-row">
+            <div class="details-col">
+                <p><strong>Qualification:</strong> {{ partner.qualification }}</p>
+                <p><strong>Job:</strong> {{ partner.designation }} at {{ partner.company_name }}</p>
+                <p><strong>Age:</strong> {{ partner.age }}</p>
+            </div>
+            <div class="details-col">
+                <p><strong>Gender:</strong> {{ partner.gender }}</p>
+                <p><strong>Caste:</strong> {{ partner.personaldetails.caste }}</p>
+                <p><strong>Religion:</strong> {{ partner.personaldetails.religion }}</p>
+                <p><strong>Height:</strong> {{ partner.personaldetails.height }} cm</p>
+                <p><strong>Weight:</strong> {{ partner.personaldetails.weight }} kg</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="contactDetails" class="profile-details">
+        <h3>Contact Details</h3>
+        <div class="details-row">
+            <div class="details-col">
+                <p><strong>Phone Number:</strong> {{ partner.phone_number }}</p>
+                <p><strong>Email:</strong> {{ partner.email }}</p>
+                <p><strong>Address:</strong> {{ partner.personaldetails.permanent_address }}</p>
+            </div>
+            <div class="details-col">
+                <p><strong>Income:</strong> {{ partner.personaldetails.income }}</p>
+                <p><strong>Hobbies:</strong> {{ partner.hobbies }}</p>
+                <p><strong>Interests:</strong> {{ partner.interests }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-details">
+        <h3>Parents Details</h3>
+        <div class="details-row">
+            <div class="details-col">
+                <p><strong>Father's Name:</strong> {{ partner.personaldetails.fathers_name }}</p>
+                <p><strong>Father's Job:</strong> {{ partner.personaldetails.fathers_job }}</p>
+            </div>
+            <div class="details-col">
+                <p><strong>Mother's Name:</strong> {{ partner.personaldetails.mothers_name }}</p>
+                <p><strong>Mother's Job:</strong> {{ partner.personaldetails.mothers_job }}</p>
+            </div>
+        </div>
+    </div>    
+
+    <div class="text-center">
+        <button class="btn btn-custom mt-5">
+            <a href="{% url 'user:grid' %}" class="back-btn">Back to Partners List</a>
+        </button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var hasSubscription = {{ has_subscription|yesno:"true,false" }}; // Use yesno filter for boolean values
+        var messageButton = document.getElementById('messageButton');
+        var subscriptionMessage = document.getElementById('subscriptionMessage');
+        var contactDetails = document.getElementById('contactDetails');
+
+        // Show contact details if the user has a subscription
+        if (hasSubscription) {
+            contactDetails.style.display = 'block';
+        }
+
+        messageButton.addEventListener('click', function(event) {
+            if (!hasSubscription) {
+                event.preventDefault(); // Prevent default button action
+                subscriptionMessage.style.display = 'block'; // Show message
+            } else {
+                window.location.href = "{% url 'user:chatbox' partner.id %}"; // Redirect if subscribed
+            }
+        });
+    });
+</script>
+
+{% endblock %}
+

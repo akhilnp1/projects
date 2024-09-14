@@ -1,0 +1,163 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% extends 'accounts/shared/accounts_base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+<style>
+    body {
+        background-color: rgb(249, 248, 247);
+    }
+    .profile-header {
+        color: rgb(217, 123, 123);
+        margin-top: 30px;
+        text-align: center;
+    }
+    .card {
+        border-color: rgb(217, 123, 123);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: white;
+        /* margin-top: 400px; */
+    }
+    .card img {
+        border-radius: 100px;
+        border: 3px solid rgb(217, 123, 123);
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        margin-top:-120px ;
+    }
+    .table th {
+        color: rgb(217, 123, 123);
+        font-weight: bold;
+    }
+    .table td {
+        font-size: larger;
+        color: grey;
+    }
+    .btn-custom {
+        color: rgb(246, 245, 245);
+        background-color: rgb(230, 156, 156);
+        border-color: rgb(230, 156, 156);
+        border-radius: 20px;
+        margin: 5px;
+    }
+    .card-footer {
+        text-align: center;
+    }
+    @media (max-width: 768px) {
+        .card img {
+            width: 100px;
+            height: 100px;
+        }
+    }
+</style>
+{% endblock styles %}
+
+{% block accounts_content %}
+<br><br><br><br><br><br>
+    <div class="card my-4 mx-4" style="max-width: 800px;">
+        <div class="text-center">
+            <img src="{{ data.profile_photo.url }}" alt="Profile Photo">
+        </div>
+        <table class="table mt-4">
+            <tr>
+                <th>First Name</th>
+                <td>{{ data.first_name }}</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>{{ data.last_name }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ data.username }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ data.email }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ data.age }}</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>{{ data.date_of_birth }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ data.gender }}</td>
+            </tr>
+            <tr>
+                <th>Hobbies</th>
+                <td>{{ data.hobbies }}</td>
+            </tr>
+            <tr>
+                <th>Interests</th>
+                <td>{{ data.interests }}</td>
+            </tr>
+            <tr>
+                <th>Qualification</th>
+                <td>{{ data.qualification }}</td>
+            </tr>
+            <tr>
+                <th>Caste</th>
+                <td>{{ data.personaldetails.caste }}</td>
+            </tr>
+            <tr>
+                <th>Income</th>
+                <td>{{ data.personaldetails.income }}</td>
+            </tr>
+            <tr>
+                <th>Company Name</th>
+                <td>{{ data.company_name }}</td>
+            </tr>
+            <tr>
+                <th>Designation</th>
+                <td>{{ data.designation }}</td>
+            </tr>
+            <tr>
+                <th>Job Location</th>
+                <td>{{ data.location }}</td>
+            </tr>
+            <tr>
+                <th>Job Seeking</th>
+                <td>{{ data.job_title }}</td>
+            </tr>
+            <tr>
+                <th>Experience in Job</th>
+                <td>{{ data.expertise }}</td>
+            </tr>
+        </table>
+        <div class="card-footer mt-4">
+            <a href="{% url 'account:password_change' %}" class="btn btn-custom">
+                <i class="bi bi-lock"></i> Change Password
+            </a>
+            <a href="{% url 'account:profile_edit' %}" class="btn btn-custom">
+                <i class="bi bi-pencil"></i> Edit Profile
+            </a>
+        </div>
+    </div>
+{% endblock accounts_content %} 

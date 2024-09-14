@@ -1,0 +1,269 @@
+{% extends 'usernav/shared/navbar.html' %}
+{% block content %}
+<style>
+    /* General Body Styles */
+    body {
+        background-color: rgb(249, 248, 247);
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Container Styles */
+    .card-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    /* Card Styles */
+    .card {
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(230, 230, 230);
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        color: rgb(70, 70, 70);
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Card Title */
+    .plan-title {
+        font-size: 1.6em;
+        margin-bottom: 10px;
+        color: rgb(136, 51, 86);
+    }
+
+    /* Price Styling */
+    .plan-price {
+        font-size: 1.3em;
+        color: rgb(136, 51, 86);
+        margin-bottom: 20px;
+    }
+
+    /* Subscribe Button Styles */
+    .subscribe-button {
+        background-color: rgb(136, 51, 86);
+        border: none;
+        border-radius: 25px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.1em;
+        padding: 10px 25px;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .subscribe-button:hover {
+        background-color: rgb(114, 44, 71);
+        transform: translateY(-2px);
+    }
+
+    /* Page Title */
+    .title {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.2em;
+        color: rgb(136, 51, 86);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 576px) {
+        .card-container {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .card {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 1.8em;
+        }
+    }
+</style>
+
+<h1 class="title mt-5">Choose Your Plan</h1>
+<div class="card-container">
+    <div class="card">
+        <h2 class="plan-title">Monthly Plan</h2>
+        <p class="plan-price">$9.99 per month</p>
+        <form id="monthly-plan-form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="price_id" value="price_1Pg2CUC6cru8uZEB6sG7nTRy">
+            <button type="submit" class="subscribe-button">Subscribe Monthly</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2 class="plan-title">Yearly Plan</h2>
+        <p class="plan-price">$79.99 per year</p>
+        <form id="yearly-plan-form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="price_id" value="price_1Ph3KrC6cru8uZEBwfBM5SVo">
+            <button type="submit" class="subscribe-button">Subscribe Yearly</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('form');
+
+        forms.forEach(form => {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const response = await fetch('{% url "user:create_checkout_session" %}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    console.error(result.error);
+                } else {
+                    const stripe = Stripe('{{ stripe_publishable_key }}');
+                    stripe.redirectToCheckout({ sessionId: result.id });
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
+
+
+
+{% comment %} {% extends 'usernav/shared/navbar.html' %}
+{% block content %}
+<style>
+    /* Style for the entire container */
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+/* Style for each card */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Style for the title of each plan */
+.plan-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Style for the price */
+.plan-price {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style for the subscribe button */
+.subscribe-button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 10px 20px;
+    transition: background-color 0.2s;
+}
+
+.subscribe-button:hover {
+    background-color: #0056b3;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2em;
+    color: #333;
+}
+
+</style>
+
+<h1 class="title">Choose Your Plan</h1>
+<div class="card-container">
+    <div class="card">
+        <h2 class="plan-title">Monthly Plan</h2>
+        <p class="plan-price">$9.99 per month</p>
+        <form id="monthly-plan-form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="price_id" value="price_1Pg2CUC6cru8uZEB6sG7nTRy">
+            <button type="submit" class="subscribe-button">Subscribe Monthly</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2 class="plan-title">Yearly Plan</h2>
+        <p class="plan-price">$99.99 per year</p>
+        <form id="yearly-plan-form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="price_id" value="price_1Ph3KrC6cru8uZEBwfBM5SVo">
+            <button type="submit" class="subscribe-button">Subscribe Yearly</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('form');
+
+        forms.forEach(form => {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const response = await fetch('{% url "user:create_checkout_session" %}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    console.error(result.error);
+                } else {
+                    const stripe = Stripe('{{ stripe_publishable_key }}');
+                    stripe.redirectToCheckout({ sessionId: result.id });
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %} {% endcomment %}

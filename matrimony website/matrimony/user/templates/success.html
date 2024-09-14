@@ -1,0 +1,38 @@
+{% extends 'usernav/shared/navbar.html' %}
+
+{% block content %}
+<style>
+    .success-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .success-message {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary-custom {
+        color: #fff;
+        background-color: rgb(230, 156, 156);
+        border-color: rgb(230, 156, 156);
+        border-radius: 20px;
+        padding: 10px 20px;
+        text-decoration: none;
+    }
+</style>
+
+<div class="success-container">
+    <div class="success-message">
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your payment. Your transaction was successful.</p>
+        <a href="{% url 'account:profile' %}" class="btn btn-primary-custom">Go to Profile</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'shared/home.html' %}
+
+{% block content %}
+
+<body>
+
+
+
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col">
+    </div>
+   
+    <div class="col pt-5" style="color: grey;background-color: rgb(207, 244, 228);font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-top: 50px;border-radius: 30px;padding: 50px;margin-bottom: 100px;">
+      <h1 style="text-align: center;color: rgb(4, 108, 23);">Job details</h1>
+    
+      <form method="post" >
+        {% csrf_token %}
+
+        <div class="row">
+          <div class="col">
+              {% include 'components/form_field.html' with field=form.job_title %}
+          </div>
+          </div>
+          <div class="col">
+          <div class="col">
+              {% include 'components/form_field.html' with field=form.expertise %}
+          </div>
+      </div>
+     
+  
+      
+      <div class="row">
+        
+       
+    </div>
+    <div class="row">
+      
+    
+    </div>
+
+    <div class="row">
+       
+    </div>
+
+
+      <button type="submit" class="btn btn-primary mt-4" style="color: rgb(246, 245, 245);background-color: rgb(4, 108, 23);border-color:rgb(4, 108, 23);">next</button>
+
+    
+        
+
+      </form>
+    </div>
+
+
+    <div class="col">
+    </div>
+  </div>
+ 
+</div>
+
+{% endblock content %}
+    
